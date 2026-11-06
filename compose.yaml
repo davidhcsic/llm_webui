@@ -1,0 +1,29 @@
+# Local Open WebUI → IIIA Qwen gateway (self-hosted). Secrets stay in .env (gitignored).
+name: iiia-qwen-webui
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.12.4
+    container_name: iiia-qwen-open-webui
+    restart: unless-stopped
+    ports:
+      # All interfaces — LAN clients (not only loopback).
+      - "0.0.0.0:3000:8080"
+    env_file:
+      - .env
+    environment:
+      WEBUI_AUTH: "true"
+      ENABLE_SIGNUP: "false"
+      ENABLE_OLLAMA_API: "false"
+      DO_NOT_TRACK: "true"
+      SCARF_NO_ANALYTICS: "true"
+      ANONYMIZED_TELEMETRY: "false"
+      OFFLINE_MODE: "false"
+      AUDIO_STT_ENGINE: "faster-whisper"
+      WHISPER_MODEL: "base"
+      WHISPER_COMPUTE_TYPE: "int8"
+    volumes:
+      - open-webui-data:/app/backend/data
+
+volumes:
+  open-webui-data:
