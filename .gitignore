@@ -3,6 +3,9 @@
 .env.*
 !.env.example
 *.key
+*.pem
+*.crt
+certs/
 secrets/
 
 # OS / editor artifacts
